@@ -6,8 +6,12 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        let input = "a b c"
-        let letters = input.components(separatedBy: " ")
+        let input = """
+                    a
+                    b
+                    c
+                    """
+        let letters = input.components(separatedBy: "\n")
 
         return Text("Hello World")
     }
