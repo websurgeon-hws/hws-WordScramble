@@ -6,18 +6,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        let input = """
-                    a
-                    b
-                    c
-                    """
-        let letters = input.components(separatedBy: "\n")
+        let word = "swift"
+        let checker = UITextChecker()
+        
+        let range = NSRange(location: 0, length: word.utf16.count)
 
-        let letter = letters.randomElement() ?? "no input"
-
-        let trimmed = letter.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        return Text("\(trimmed)")
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        
+        let allGood = misspelledRange.location == NSNotFound
+        
+        return Text("Hello World")
     }
 }
 
