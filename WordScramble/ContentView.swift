@@ -14,8 +14,10 @@ struct ContentView: View {
         let letters = input.components(separatedBy: "\n")
 
         let letter = letters.randomElement() ?? "no input"
-        
-        return Text("\(letter)")
+
+        let trimmed = letter.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        return Text("\(trimmed)")
     }
 }
 
