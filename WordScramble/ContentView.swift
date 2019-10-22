@@ -5,11 +5,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    let people = ["Finn", "Leia", "Luke", "Rey"]
+    
     var body: some View {
-        List {
-            ForEach(0..<5) {
-                Text("Dynamic row \($0)")
-            }
+        List(people, id: \.self) {
+            Text("Dynamic row \($0)")
         }
         .listStyle(GroupedListStyle())
 
