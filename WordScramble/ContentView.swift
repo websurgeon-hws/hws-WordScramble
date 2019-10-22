@@ -13,7 +13,9 @@ struct ContentView: View {
                     """
         let letters = input.components(separatedBy: "\n")
 
-        return Text("Hello World")
+        let letter = letters.randomElement() ?? "no input"
+        
+        return Text("\(letter)")
     }
 }
 
