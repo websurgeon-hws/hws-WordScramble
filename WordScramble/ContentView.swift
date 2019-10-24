@@ -42,7 +42,15 @@ struct ContentView: View {
         let answer = newWord.lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
         
-        guard answer.count > 0 else {
+        guard isLongEnough(word: answer) else {
+            wordError(title: "Word used too short", message: "Must be at least 3 charecters")
+
+            return
+        }
+        
+        guard answer.lowercased() != rootWord.lowercased() else {
+            wordError(title: "Word is to obvious", message: "Make up your own word!")
+
             return
         }
         
@@ -70,6 +78,10 @@ struct ContentView: View {
         return
     }
     
+    func isLongEnough(word: String) -> Bool {
+        return word.count > 2
+    }
+        
     func isOriginal(word: String) -> Bool {
         return !usedWords.contains(word)
     }
@@ -88,12 +100,6 @@ struct ContentView: View {
         return true
     }
     
-    func wordError(title: String, message: String) {
-        errorTitle = title
-        errorMessage = message
-        showingError = true
-    }
-    
     func isReal(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
@@ -101,6 +107,12 @@ struct ContentView: View {
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
         return misspelledRange.location == NSNotFound
+    }
+
+    func wordError(title: String, message: String) {
+        errorTitle = title
+        errorMessage = message
+        showingError = true
     }
     
     func startGame() {
