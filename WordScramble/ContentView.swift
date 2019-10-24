@@ -35,6 +35,9 @@ struct ContentView: View {
                       message: Text(errorMessage),
                       dismissButton: .default(Text("OK")))
             }
+            .navigationBarItems(leading: Button(action: startGame) {
+                Text("Restart")
+            })
         }
     }
     
@@ -116,6 +119,9 @@ struct ContentView: View {
     }
     
     func startGame() {
+        usedWords = []
+        newWord = ""
+        
         if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsUrl) {
                 let allWords = startWords.components(separatedBy: "\n")
