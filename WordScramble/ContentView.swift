@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showingError = false
 
+    @State private var score = 0
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -27,6 +29,10 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                
+                Text("Score: \(score)")
+                    .font(.system(.largeTitle))
+                    .foregroundColor(.gray)
             }
             .navigationBarTitle(rootWord)
             .onAppear(perform: startGame)
@@ -74,9 +80,11 @@ struct ContentView: View {
 
             return
         }
-        
+
         usedWords.insert(answer, at: 0)
         newWord = ""
+
+        calculateScore()
 
         return
     }
@@ -118,9 +126,16 @@ struct ContentView: View {
         showingError = true
     }
     
+    func calculateScore() {
+        score = usedWords.reduce(0) { result, word in
+            return result + (word.count * word.count)
+        }
+    }
+    
     func startGame() {
         usedWords = []
         newWord = ""
+        score = 0
         
         if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsUrl) {
